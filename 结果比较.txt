@@ -1,0 +1,26 @@
+void compareResults(const Circuit& circuit, double timeTaken) {
+    int bufferCount = circuit.buffers.size();
+    cout << "Buffer Count: " << bufferCount << endl;
+    cout << "Time Taken: " << fixed << setprecision(2) << timeTaken << " seconds" << endl;
+}
+
+int main() {
+    Circuit circuit;
+    generateTestCases(circuit, 10, 10, 3); // 生成10x10的电路，平均每个单元格连接3条线
+
+    auto start = chrono::high_resolution_clock::now();
+
+    // 拓扑初始化
+    topologyInitialization(circuit);
+
+    // 布局和缓冲
+    placementAndBuffering(circuit);
+
+    auto end = chrono::high_resolution_clock::now();
+    double timeTaken = chrono::duration<double>(end - start).count();
+
+    // 输出结果
+    compareResults(circuit, timeTaken);
+
+    return 0;
+}

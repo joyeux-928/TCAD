@@ -1,0 +1,24 @@
+void generateTestCases(Circuit& circuit, int rows, int cols, int avgConnections) {
+    circuit.rows = rows;
+    circuit.cols = cols;
+    circuit.cells.clear();
+    circuit.buffers.clear();
+
+    int cellId = 0;
+    for (int r = 0; r < rows; ++r) {
+        for (int c = 0; c < cols; ++c) {
+            Cell cell;
+            cell.id = cellId++;
+            cell.row = r;
+            cell.col = c;
+            cell.wireCount = rand() % (avgConnections * 2) + avgConnections;
+
+            for (int i = 0; i < cell.wireCount; ++i) {
+                int connId = rand() % (rows * cols);
+                cell.connections.push_back(connId);
+            }
+
+            circuit.cells.push_back(cell);
+        }
+    }
+}
